@@ -113,6 +113,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  dio:
+    dependency: "direct main"
+    description:
+      name: dio
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.10"
   equatable:
     dependency: "direct main"
     description:
@@ -215,7 +222,7 @@ packages:
     source: hosted
     version: "0.9.7"
   mockito:
-    dependency: transitive
+    dependency: "direct dev"
     description:
       name: mockito
       url: "https://pub.dartlang.org"
