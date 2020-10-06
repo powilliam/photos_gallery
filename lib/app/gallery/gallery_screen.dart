@@ -27,7 +27,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
   void initState() {
     super.initState();
     _scrollController.addListener(() {
-      if (_scrollController.offset > 350) {
+      if (_scrollController.offset > 250) {
         setState(() {
           isScrolling = true;
         });
@@ -99,7 +99,15 @@ class _GalleryScreenState extends State<GalleryScreen> {
               ),
             ]),
           ),
-          BlocBuilder<GalleryBloC, GalleryState>(builder: (_, state) {
+          BlocConsumer<GalleryBloC, GalleryState>(listener: (context, state) {
+            if (state is GalleryStateFailure) {
+              Scaffold.of(context)
+                ..hideCurrentSnackBar()
+                ..showSnackBar(SnackBar(
+                  content: Text('An error occured: ${state.reason}'),
+                ));
+            }
+          }, builder: (_, state) {
             return new SliverList(
               delegate: SliverChildBuilderDelegate((context, i) {
                 return new GalleryImage(
@@ -107,21 +115,18 @@ class _GalleryScreenState extends State<GalleryScreen> {
               }, childCount: state.images.length),
             );
           }),
-          BlocBuilder<GalleryBloC, GalleryState>(builder: (context, state) {
-            return new SliverList(
-              delegate: SliverChildListDelegate([
-                Padding(
-                  padding: EdgeInsets.all(24),
-                  child: Center(
-                    child: CircularProgressIndicator(
-                      backgroundColor: Theme.of(context).backgroundColor,
-                    ),
-                  ),
-                )
-              ]),
+          BlocBuilder<GalleryBloC, GalleryState>(builder: (_, state) {
+            return new SliverFillRemaining(
+              hasScrollBody: false,
+              child: Padding(
+                padding: EdgeInsets.all(24),
+                child: Center(
+                    child: state is GalleryStateLoadInProgress
+                        ? CircularProgressIndicator(
+                            backgroundColor: Theme.of(context).backgroundColor)
+                        : null),
+              ),
             );
-          }, buildWhen: (_, newState) {
-            return newState is GalleryStateLoadInProgress;
           })
         ],
       ),

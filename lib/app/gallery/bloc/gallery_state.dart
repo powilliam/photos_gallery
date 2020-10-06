@@ -59,7 +59,11 @@ class GalleryStateSuccess extends GalleryState {
 
 class GalleryStateFailure extends GalleryState {
   GalleryStateFailure(
-      {this.images = const [], this.page, this.isSearching, this.query})
+      {this.images = const [],
+      this.page,
+      this.isSearching,
+      this.query,
+      this.reason})
       : super(
             images: images, page: page, isSearching: isSearching, query: query);
 
@@ -67,11 +71,12 @@ class GalleryStateFailure extends GalleryState {
   final int page;
   final bool isSearching;
   final String query;
+  final String reason;
 
   @override
   List<Object> get props => [images, page, isSearching, query];
 
   @override
   String toString() =>
-      "GalleryStateFailure{images: $images, page: $page, isSearching: $isSearching, query: $query}";
+      "GalleryStateFailure{images: $images, page: $page, isSearching: $isSearching, query: $query, reason: $reason}";
 }

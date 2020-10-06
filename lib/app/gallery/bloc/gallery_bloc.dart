@@ -30,12 +30,13 @@ class GalleryBloC extends Bloc<GalleryEvent, GalleryState> {
         query: state.query);
   }
 
-  Stream<GalleryStateFailure> _mapStateToFailure() async* {
+  Stream<GalleryStateFailure> _mapStateToFailure(String reason) async* {
     yield GalleryStateFailure(
         images: state.images,
         page: state.page,
         isSearching: state.isSearching,
-        query: state.query);
+        query: state.query,
+        reason: reason);
   }
 
   Stream<GalleryState> _mapGettedToState(GalleryGetted event) async* {
@@ -47,7 +48,7 @@ class GalleryBloC extends Bloc<GalleryEvent, GalleryState> {
           page: event.page,
           isSearching: false);
     } catch (e) {
-      yield* _mapStateToFailure();
+      yield* _mapStateToFailure(e);
     }
   }
 
@@ -63,7 +64,7 @@ class GalleryBloC extends Bloc<GalleryEvent, GalleryState> {
           isSearching: true,
           query: event.query);
     } catch (e) {
-      yield* _mapStateToFailure();
+      yield* _mapStateToFailure(e);
     }
   }
 }
