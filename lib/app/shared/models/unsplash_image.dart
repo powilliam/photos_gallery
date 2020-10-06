@@ -34,4 +34,8 @@ class UnsplashImage extends Equatable {
 
   @override
   List<Object> get props => [id, urls, links];
+
+  @override
+  String toString() =>
+      "UnsplashImage{id: $id, urls: ${urls.toString()}, links: ${links.toString()}, user: ${user.toString()}}";
 }

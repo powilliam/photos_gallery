@@ -24,4 +24,8 @@ class UnsplashUserImage extends Equatable {
 
   @override
   List<Object> get props => [small, medium, large];
+
+  @override
+  String toString() =>
+      "UnsplashUserImage{small: $small, medium: $medium, large: $large}";
 }

@@ -36,4 +36,8 @@ class UnsplashUrls extends Equatable {
 
   @override
   List<Object> get props => [raw, full, regular, small, thumb];
+
+  @override
+  String toString() =>
+      "UnsplashUrls{raw: $raw, full: $full, regular: $regular, small: $small, thumb: $thumb}";
 }

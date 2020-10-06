@@ -32,4 +32,8 @@ class UnsplashLinks extends Equatable {
 
   @override
   List<Object> get props => [self, html, download, downloadLocation];
+
+  @override
+  String toString() =>
+      "UnsplashLinks{self: $self, html: $html, download: $download, download_location: $downloadLocation}";
 }
