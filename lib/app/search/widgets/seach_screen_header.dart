@@ -52,13 +52,25 @@ class _SearchScreenHeaderState extends State<SearchScreenHeader> {
                             .textTheme
                             .bodyText1
                             .copyWith(color: Theme.of(context).accentColor)),
+                    onSubmitted: (query) {
+                      if (query.isEmpty &&
+                          BlocProvider.of<SearchBloC>(context).state.query ==
+                              query) {
+                        return;
+                      }
+                      BlocProvider.of<SearchBloC>(context)
+                          .add(SearchSubmitted(query: query));
+                    },
                   ),
                 ),
                 SizedBox(width: 12),
                 IconButton(
                   icon: Icon(Icons.send, size: 20, color: Colors.white),
                   onPressed: () {
-                    if (_searchController.text.isEmpty) {
+                    FocusScope.of(context).unfocus();
+                    if (_searchController.text.isEmpty &&
+                        BlocProvider.of<SearchBloC>(context).state.query ==
+                            _searchController.text) {
                       return;
                     }
                     BlocProvider.of<SearchBloC>(context)

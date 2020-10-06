@@ -18,7 +18,7 @@ class PreviewScreen extends StatelessWidget {
         children: <Widget>[
           Positioned.fill(
             child: Image.network(
-              image.urls.regular,
+              image.urls.full,
               fit: BoxFit.cover,
               loadingBuilder: (_, widget, progress) {
                 if (progress == null) return widget;
@@ -52,7 +52,7 @@ class PreviewScreen extends StatelessWidget {
                   CircleAvatar(
                     backgroundColor: Theme.of(context).backgroundColor,
                     backgroundImage:
-                        NetworkImage(image.user.profileImage.medium),
+                        NetworkImage(image.user.profileImage.large),
                   ),
                   SizedBox(width: 12),
                   Expanded(

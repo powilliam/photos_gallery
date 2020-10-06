@@ -19,7 +19,7 @@ class UnsplashImageWidget extends StatelessWidget {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(24),
                     image: DecorationImage(
-                      image: NetworkImage(image.urls.small),
+                      image: NetworkImage(image.urls.regular),
                       fit: BoxFit.cover,
                     ),
                     border: Border.all(
@@ -35,7 +35,7 @@ class UnsplashImageWidget extends StatelessWidget {
                     CircleAvatar(
                       backgroundColor: Theme.of(context).backgroundColor,
                       backgroundImage:
-                          NetworkImage(image.user.profileImage.medium),
+                          NetworkImage(image.user.profileImage.large),
                     ),
                     SizedBox(width: 8),
                     Expanded(

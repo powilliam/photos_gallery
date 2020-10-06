@@ -32,7 +32,7 @@ class SearchScreenImageList extends StatelessWidget {
           hasScrollBody: false,
           child: Warning(
             icon: Icons.image_search,
-            message: "You didn't search anything yet",
+            message: "You haven't searched anything yet",
           ),
         );
       }
