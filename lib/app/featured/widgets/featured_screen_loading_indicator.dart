@@ -10,16 +10,18 @@ class FeaturedScreenLoadingIndicator extends StatelessWidget {
         fillOverscroll: true,
         hasScrollBody: false,
         child: BlocBuilder<FeaturedBloC, FeaturedState>(builder: (_, state) {
-          if (state is FeaturedLoadInProgress) {
-            return new Padding(
-              padding: EdgeInsets.all(24),
-              child: Center(
-                  child: CircularProgressIndicator(
-                backgroundColor: Theme.of(context).backgroundColor,
-              )),
-            );
-          }
-          return SizedBox();
+          return new Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                  padding: EdgeInsets.all(48),
+                  child: (state is FeaturedLoadInProgress
+                      ? CircularProgressIndicator()
+                      : SizedBox())),
+              SizedBox(height: 24)
+            ],
+          );
         }));
   }
 }

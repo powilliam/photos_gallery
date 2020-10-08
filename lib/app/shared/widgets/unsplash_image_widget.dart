@@ -6,6 +6,7 @@ import 'package:photo_gallery/app/preview/repositories/preview_repository.dart';
 import 'package:photo_gallery/app/shared/models/unsplash_image.dart';
 import 'package:photo_gallery/app/shared/services/download_service.dart';
 import 'package:photo_gallery/app/shared/widgets/blurred_container.dart';
+import 'package:shimmer/shimmer.dart';
 
 class UnsplashImageWidget extends StatelessWidget {
   UnsplashImageWidget({Key key, @required this.image}) : super(key: key);
@@ -31,12 +32,12 @@ class UnsplashImageWidget extends StatelessWidget {
                 child: Image.network(image.urls.regular, fit: BoxFit.cover,
                     loadingBuilder: (_, widget, progress) {
                   if (progress == null) return widget;
-                  return Center(
-                    child: CircularProgressIndicator(
-                        value: progress.cumulativeBytesLoaded /
-                            progress.expectedTotalBytes,
-                        backgroundColor: Theme.of(context).backgroundColor),
-                  );
+                  return new Shimmer.fromColors(
+                      baseColor: Colors.grey[900],
+                      highlightColor: Theme.of(context).backgroundColor,
+                      child: Container(
+                        color: Theme.of(context).backgroundColor,
+                      ));
                 }),
               ),
             )),

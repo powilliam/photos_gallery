@@ -28,16 +28,10 @@ class PreviewScreen extends StatelessWidget {
           Positioned.fill(
             child: Hero(
               tag: image.id,
-              child: Image.network(image.urls.regular, fit: BoxFit.cover,
-                  loadingBuilder: (_, widget, progress) {
-                if (progress == null) return widget;
-                return Center(
-                  child: CircularProgressIndicator(
-                      value: progress.cumulativeBytesLoaded /
-                          progress.expectedTotalBytes,
-                      backgroundColor: Theme.of(context).backgroundColor),
-                );
-              }),
+              child: Image.network(
+                image.urls.regular,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           Positioned(
