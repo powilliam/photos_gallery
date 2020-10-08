@@ -68,7 +68,7 @@ class _SearchScreenHeaderState extends State<SearchScreenHeader> {
                   icon: Icon(Icons.send, size: 20, color: Colors.white),
                   onPressed: () {
                     FocusScope.of(context).unfocus();
-                    if (_searchController.text.isEmpty &&
+                    if (_searchController.text.isEmpty ||
                         BlocProvider.of<SearchBloC>(context).state.query ==
                             _searchController.text) {
                       return;
