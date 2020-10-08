@@ -24,8 +24,8 @@ class UnsplashServiceSearchDTO {
 }
 
 abstract class UnsplashServiceContract {
-  Future<List<dynamic>> list(UnsplashServiceListDTO dto);
-  Future<dynamic> search(UnsplashServiceSearchDTO dto);
+  Future<List<Map<String, dynamic>>> list(UnsplashServiceListDTO dto);
+  Future<Map<String, dynamic>> search(UnsplashServiceSearchDTO dto);
 }
 
 class UnsplashService implements UnsplashServiceContract {
@@ -34,9 +34,9 @@ class UnsplashService implements UnsplashServiceContract {
   final Dio dio;
 
   @override
-  Future<List<dynamic>> list(UnsplashServiceListDTO dto) async {
+  Future<List<Map<String, dynamic>>> list(UnsplashServiceListDTO dto) async {
     try {
-      final Response<List<dynamic>> response = await dio.get('/photos',
+      final Response response = await dio.get('/photos',
           queryParameters: {"page": dto.page, "per_page": dto.limit});
       return response.data;
     } catch (e) {
@@ -45,7 +45,7 @@ class UnsplashService implements UnsplashServiceContract {
   }
 
   @override
-  Future<dynamic> search(UnsplashServiceSearchDTO dto) async {
+  Future<Map<String, dynamic>> search(UnsplashServiceSearchDTO dto) async {
     try {
       final Response response = await dio.get('/search/photos',
           queryParameters: {
