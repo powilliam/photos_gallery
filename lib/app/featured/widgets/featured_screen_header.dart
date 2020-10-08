@@ -16,8 +16,9 @@ class FeaturedScreenHeader extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text('Featured on Unsplash',
-                    style: Theme.of(context).textTheme.bodyText1),
+                Expanded(
+                    child: Text('Featured on Unsplash',
+                        style: Theme.of(context).textTheme.bodyText1)),
                 IconButton(
                   icon: Icon(Icons.search, color: Colors.white),
                   onPressed: () {

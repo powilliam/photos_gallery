@@ -14,9 +14,7 @@ class SearchScreenImageList extends StatelessWidget {
           fillOverscroll: true,
           hasScrollBody: false,
           child: Warning(
-              icon: Icons.error_outline,
-              message:
-                  "Something went wrong during some process \n Try again later"),
+              icon: Icons.error_outline, message: "Something went wrong"),
         );
       } else if (state is SearchEmpty) {
         return new SliverFillRemaining(

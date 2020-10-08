@@ -14,9 +14,7 @@ class FeaturedScreenImageList extends StatelessWidget {
           fillOverscroll: true,
           hasScrollBody: false,
           child: Warning(
-              icon: Icons.error_outline,
-              message:
-                  "Something went wrong during some process \n Try again later"),
+              icon: Icons.error_outline, message: "Something went wrong"),
         );
       }
       return new SliverList(
