@@ -36,9 +36,10 @@ class UnsplashService implements UnsplashServiceContract {
   @override
   Future<List<Map<String, dynamic>>> list(UnsplashServiceListDTO dto) async {
     try {
-      final Response response = await dio.get('/photos',
+      final response = await dio.get('/photos',
           queryParameters: {"page": dto.page, "per_page": dto.limit});
-      return response.data;
+      return List.generate(response.data.length as int,
+          (index) => new Map.from(response.data[index]));
     } catch (e) {
       throw "UnsplashService{message: ${e.toString()}, dto: ${dto.toString()}}";
     }
@@ -47,13 +48,12 @@ class UnsplashService implements UnsplashServiceContract {
   @override
   Future<Map<String, dynamic>> search(UnsplashServiceSearchDTO dto) async {
     try {
-      final Response response = await dio.get('/search/photos',
-          queryParameters: {
-            "query": dto.query,
-            "page": dto.page,
-            "per_page": dto.limit
-          });
-      return response.data;
+      final response = await dio.get('/search/photos', queryParameters: {
+        "query": dto.query,
+        "page": dto.page,
+        "per_page": dto.limit
+      });
+      return new Map.from(response.data);
     } catch (e) {
       throw "UnsplashService{message: ${e.toString()}, dto: ${dto.toString()}}";
     }

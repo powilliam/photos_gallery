@@ -25,7 +25,7 @@ class FeaturedRepository implements FeaturedRepositoryContract {
   @override
   Future<List<UnsplashImage>> list(FeaturedRepositoryListDTO dto) async {
     try {
-      final List<dynamic> data = await unsplashService
+      final List<Map<String, dynamic>> data = await unsplashService
           .list(UnsplashServiceListDTO(page: dto.page, limit: dto.limit));
       return List.generate(
           data.length, (index) => UnsplashImage.fromJSON(data[index]));
