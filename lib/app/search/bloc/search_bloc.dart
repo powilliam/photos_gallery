@@ -62,12 +62,8 @@ class SearchBloC extends Bloc<SearchEvent, SearchState> {
       final List<UnsplashImage> images = await repository.search(
           SearchRepositorySearchDTO(
               query: state.query, page: event.page, limit: event.limit));
-      if (images.isEmpty) {
-        yield* _mapStateToEmpty<SearchLoaded>(event);
-      } else {
-        yield SearchSuccess(
-            images: [...state.images, ...images], query: state.query);
-      }
+      yield SearchSuccess(
+          images: [...state.images, ...images], query: state.query);
     } catch (e) {
       yield* _mapStateToFailure();
     }
