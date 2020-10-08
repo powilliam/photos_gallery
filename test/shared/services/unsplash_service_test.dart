@@ -1,12 +1,16 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:photo_gallery/app/shared/services/unsplash_service.dart';
 
+class MockDio extends Mock implements Dio {}
+
 class MockUnsplashService extends Mock implements UnsplashServiceContract {}
 
 void main() {
-  MockUnsplashService unsplashService;
-  List<Map<String, dynamic>> listOfImageMap = List.generate(
+  MockDio dio;
+  UnsplashService unsplashService;
+  List<Map<String, dynamic>> data = List.generate(
       3,
       (i) => ({
             'id': '123',
@@ -35,26 +39,27 @@ void main() {
             }
           }));
 
-  setUp(() {
-    unsplashService = MockUnsplashService();
-
-    when(unsplashService.list(any)).thenAnswer((_) async => listOfImageMap);
-    when(unsplashService.search(any))
-        .thenAnswer((_) async => {"results": listOfImageMap});
+  setUp(() async {
+    dio = new MockDio();
+    unsplashService = new UnsplashService(dio: dio);
   });
 
   tearDown(() {
-    reset(unsplashService);
+    reset(dio);
   });
 
   test('Should be able to get images', () async {
-    expect(
-        await unsplashService.list(UnsplashServiceListDTO()), listOfImageMap);
+    when(dio.get('/photos', queryParameters: {"page": 1, "per_page": 10}))
+        .thenAnswer((_) async => new Response(data: data));
+    expect(await unsplashService.list(UnsplashServiceListDTO()), data);
   });
 
   test('Should be able to search images', () async {
+    when(dio.get('/search/photos',
+            queryParameters: {"query": "Code", "page": 1, "per_page": 10}))
+        .thenAnswer((_) async => new Response(data: {"results": data}));
     expect(
         await unsplashService.search(UnsplashServiceSearchDTO(query: "Code")),
-        {"results": listOfImageMap});
+        {"results": data});
   });
 }

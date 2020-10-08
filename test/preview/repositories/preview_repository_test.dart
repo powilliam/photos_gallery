@@ -21,6 +21,6 @@ void main() {
     expect(
         await repository.download(PreviewRepositoryDownloadDTO(
             name: "name", url: "https://localhost:3333")),
-        [file]);
+        file);
   });
 }
