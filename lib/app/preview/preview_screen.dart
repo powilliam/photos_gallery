@@ -1,28 +1,24 @@
+import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
-import 'package:photo_gallery/app/preview/preview_screen_controller.dart';
 import 'package:photo_gallery/app/shared/models/unsplash_image.dart';
 import 'package:photo_gallery/app/shared/widgets/blurred_container.dart';
 
 class PreviewScreen extends StatelessWidget {
-  static MaterialPageRoute route(
-          {@required UnsplashImage image,
-          @required PreviewScreenControllerContract controller}) =>
-      new MaterialPageRoute(
-          builder: (_) =>
-              new PreviewScreen(image: image, controller: controller));
+  static MaterialPageRoute route({
+    @required UnsplashImage image,
+  }) =>
+      new MaterialPageRoute(builder: (_) => new PreviewScreen(image: image));
 
-  PreviewScreen({@required this.image, @required this.controller})
-      : assert(image != null),
-        assert(controller != null);
+  PreviewScreen({@required this.image}) : assert(image != null);
 
   final UnsplashImage image;
-  final PreviewScreenControllerContract controller;
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     final EdgeInsets insets = MediaQuery.of(context).viewPadding;
     return new Scaffold(
-      key: controller.scaffoldKey,
+      key: _scaffoldKey,
       body: Stack(
         children: <Widget>[
           Positioned.fill(
@@ -67,33 +63,14 @@ class PreviewScreen extends StatelessWidget {
                       icon: Icon(Icons.download_sharp,
                           size: 20, color: Colors.white),
                       onPressed: () async {
-                        controller.scaffoldKey.currentState
+                        await FlutterClipboard.copy(image.links.download);
+                        _scaffoldKey.currentState
                           ..hideCurrentSnackBar()
                           ..showSnackBar(SnackBar(
-                            content: Text("Downloading...",
+                            content: Text(
+                                'Open your browse and paste the download link',
                                 style: Theme.of(context).textTheme.bodyText2),
-                            behavior: SnackBarBehavior.floating,
                           ));
-                        try {
-                          await controller.download(image);
-                          controller.scaffoldKey.currentState
-                            ..hideCurrentSnackBar()
-                            ..showSnackBar(SnackBar(
-                              content: Text("Done!",
-                                  style: Theme.of(context).textTheme.bodyText2),
-                              behavior: SnackBarBehavior.floating,
-                            ));
-                        } catch (e) {
-                          print(e.toString());
-                          controller.scaffoldKey.currentState
-                            ..hideCurrentSnackBar()
-                            ..showSnackBar(SnackBar(
-                              content: Text(
-                                  "Something went wrong when trying to download",
-                                  style: Theme.of(context).textTheme.bodyText2),
-                              behavior: SnackBarBehavior.floating,
-                            ));
-                        }
                       })
                 ],
               ),
